@@ -10,7 +10,7 @@ const About: React.FC = () => {
     <Layout>
       <div className="container py-12 md:py-16">
         <div className="max-w-3xl mx-auto text-center mb-16">
-          <h1 className="text-4xl font-bold mb-4">About GrantWhisper</h1>
+          <h1 className="text-4xl font-bold mb-4">About VenThatGrant</h1>
           <p className="text-xl text-gray-600">
             We're on a mission to transform how researchers and creatives discover and access funding opportunities.
           </p>
@@ -20,7 +20,7 @@ const About: React.FC = () => {
           <div>
             <h2 className="text-3xl font-bold mb-4">Our Story</h2>
             <p className="text-gray-600 mb-4">
-              GrantWhisper was born from a simple observation: finding the right grant is often harder than doing the actual research or creative work. 
+              VenThatGrant was born from a simple observation: finding the right grant is often harder than doing the actual research or creative work. 
             </p>
             <p className="text-gray-600 mb-4">
               Founded by a team of researchers and AI specialists, we set out to build a platform that understands the nuances of different research fields and creative disciplines, making the funding discovery process intuitive and effective.
@@ -90,7 +90,7 @@ const About: React.FC = () => {
             <div className="max-w-3xl mx-auto text-center">
               <h2 className="text-3xl font-bold mb-4">Ready to Find Your Perfect Grant?</h2>
               <p className="text-xl opacity-90 mb-8">
-                Join thousands of researchers and creatives who've discovered their ideal funding opportunities with GrantWhisper.
+                Join thousands of researchers and creatives who've discovered their ideal funding opportunities with VenThatGrant.
               </p>
               <Button size="lg" className="bg-white text-brand-purple hover:bg-gray-100" asChild>
                 <Link to="/explore">

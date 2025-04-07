@@ -34,7 +34,7 @@ const HowItWorks: React.FC = () => {
     <Layout>
       <div className="container py-12 md:py-16">
         <div className="max-w-3xl mx-auto text-center mb-12">
-          <h1 className="text-4xl font-bold mb-4">How GrantWhisper Works</h1>
+          <h1 className="text-4xl font-bold mb-4">How VenThatGrant Works</h1>
           <p className="text-xl text-gray-600">
             Our AI-powered platform simplifies the grant discovery process, helping you find relevant funding opportunities in minutes, not days.
           </p>

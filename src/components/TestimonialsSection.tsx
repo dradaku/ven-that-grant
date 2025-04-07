@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const testimonials = [
   {
-    quote: "GrantWhisper helped me find an obscure funding opportunity that was perfect for my research. I would have never discovered it through traditional search methods.",
+    quote: "VenThatGrant helped me find an obscure funding opportunity that was perfect for my research. I would have never discovered it through traditional search methods.",
     author: "Dr. Sarah Chen",
     role: "Biomedical Researcher",
     avatar: "/placeholder.svg"
@@ -33,7 +33,7 @@ const TestimonialsSection: React.FC = () => {
             Trusted by Researchers and Creatives
           </h2>
           <p className="text-xl text-gray-600">
-            See how GrantWhisper has helped researchers and creatives find their perfect funding opportunities.
+            See how VenThatGrant has helped researchers and creatives find their perfect funding opportunities.
           </p>
         </div>
         
