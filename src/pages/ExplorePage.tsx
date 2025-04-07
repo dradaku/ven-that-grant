@@ -8,10 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
-import { RefreshCw, Filter, AlertTriangle, Info } from 'lucide-react';
+import { RefreshCw, Filter, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useSearchParams } from 'react-router-dom';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const ExplorePage: React.FC = () => {
   const [searchResults, setSearchResults] = useState<GrantResult[]>([]);
@@ -102,17 +101,9 @@ const ExplorePage: React.FC = () => {
     <Layout>
       <div className="container py-8">
         <h1 className="text-3xl font-bold mb-2">Explore Grants</h1>
-        <p className="text-xl text-gray-600 mb-4">
+        <p className="text-xl text-gray-600 mb-6">
           Find the perfect funding opportunities for your research or creative project
         </p>
-        
-        <Alert className="mb-8">
-          <Info className="h-4 w-4" />
-          <AlertTitle>Demo Mode</AlertTitle>
-          <AlertDescription>
-            This is a demonstration using sample grants data. In a production version, this would connect to the Venice AI API to retrieve real grant opportunities.
-          </AlertDescription>
-        </Alert>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 space-y-6">
@@ -132,60 +123,58 @@ const ExplorePage: React.FC = () => {
               <GrantSearchForm onSearch={handleSearch} />
             )}
             
-            {searchResults.length > 0 && (
-              <div className="bg-white border rounded-lg p-6 space-y-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="font-medium flex items-center">
-                    <Filter className="h-4 w-4 mr-2" />
-                    Filters
-                  </h3>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={resetFilters}
-                    className="text-xs"
-                  >
-                    <RefreshCw className="h-3 w-3 mr-1" />
-                    Reset
-                  </Button>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="match-score">Minimum Match Score: {minMatchScore}%</Label>
-                  <Slider
-                    id="match-score"
-                    defaultValue={[70]}
-                    max={100}
-                    min={50}
-                    step={5}
-                    value={[minMatchScore]}
-                    onValueChange={handleScoreFilterChange}
-                  />
-                </div>
-                
-                <div className="pt-2">
-                  <Label className="mb-2 block">Grant Type</Label>
-                  <Tabs defaultValue="all" value={activeTab} onValueChange={handleTabChange}>
-                    <TabsList className="w-full">
-                      <TabsTrigger value="all" className="flex-1">All</TabsTrigger>
-                      <TabsTrigger value="government" className="flex-1">Government</TabsTrigger>
-                      <TabsTrigger value="private" className="flex-1">Private</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
-                </div>
-                
-                <div className="pt-2">
-                  <Label className="mb-2 block">Country</Label>
-                  <Tabs defaultValue="all" value={activeCountry} onValueChange={handleCountryChange}>
-                    <TabsList className="w-full">
-                      <TabsTrigger value="all" className="flex-1">All</TabsTrigger>
-                      <TabsTrigger value="US" className="flex-1">US</TabsTrigger>
-                      <TabsTrigger value="UK" className="flex-1">UK</TabsTrigger>
-                    </TabsList>
-                  </Tabs>
-                </div>
+            <div className="bg-white border rounded-lg p-6 space-y-4">
+              <div className="flex justify-between items-center">
+                <h3 className="font-medium flex items-center">
+                  <Filter className="h-4 w-4 mr-2" />
+                  Filters
+                </h3>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={resetFilters}
+                  className="text-xs"
+                >
+                  <RefreshCw className="h-3 w-3 mr-1" />
+                  Reset
+                </Button>
               </div>
-            )}
+              
+              <div className="space-y-2">
+                <Label htmlFor="match-score">Minimum Match Score: {minMatchScore}%</Label>
+                <Slider
+                  id="match-score"
+                  defaultValue={[70]}
+                  max={100}
+                  min={50}
+                  step={5}
+                  value={[minMatchScore]}
+                  onValueChange={handleScoreFilterChange}
+                />
+              </div>
+              
+              <div className="pt-2">
+                <Label className="mb-2 block">Grant Type</Label>
+                <Tabs defaultValue="all" value={activeTab} onValueChange={handleTabChange}>
+                  <TabsList className="w-full">
+                    <TabsTrigger value="all" className="flex-1">All</TabsTrigger>
+                    <TabsTrigger value="government" className="flex-1">Government</TabsTrigger>
+                    <TabsTrigger value="private" className="flex-1">Private</TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </div>
+              
+              <div className="pt-2">
+                <Label className="mb-2 block">Country</Label>
+                <Tabs defaultValue="all" value={activeCountry} onValueChange={handleCountryChange}>
+                  <TabsList className="w-full">
+                    <TabsTrigger value="all" className="flex-1">All</TabsTrigger>
+                    <TabsTrigger value="US" className="flex-1">US</TabsTrigger>
+                    <TabsTrigger value="UK" className="flex-1">UK</TabsTrigger>
+                  </TabsList>
+                </Tabs>
+              </div>
+            </div>
           </div>
           
           <div className="lg:col-span-2">
