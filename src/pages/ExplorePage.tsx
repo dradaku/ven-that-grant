@@ -3,27 +3,25 @@ import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import GrantSearchForm from '@/components/GrantSearchForm';
 import GrantResultCard from '@/components/GrantResultCard';
-import ApiKeyInput from '@/components/ApiKeyInput';
 import { searchGrants, GrantResult } from '@/services/veniceService';
+import { hasValidApiKey } from '@/config/apiConfig';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
-import { RefreshCw, Filter } from 'lucide-react';
+import { RefreshCw, Filter, AlertTriangle } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const ExplorePage: React.FC = () => {
-  const [apiKey, setApiKey] = useState('');
-  const [hasApiKey, setHasApiKey] = useState(false);
   const [searchResults, setSearchResults] = useState<GrantResult[]>([]);
   const [filteredResults, setFilteredResults] = useState<GrantResult[]>([]);
   const [activeTab, setActiveTab] = useState('all');
   const [minMatchScore, setMinMatchScore] = useState(70);
   const [isLoading, setIsLoading] = useState(false);
-
-  const handleApiKeySubmit = (key: string) => {
-    setApiKey(key);
-    setHasApiKey(true);
-  };
+  const { toast } = useToast();
+  
+  // Check if API key is valid on component mount
+  const isApiKeyValid = hasValidApiKey();
 
   const handleSearch = async (results: GrantResult[]) => {
     setSearchResults(results);
@@ -62,13 +60,20 @@ const ExplorePage: React.FC = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 space-y-6">
-            {!hasApiKey ? (
-              <ApiKeyInput onApiKeySubmit={handleApiKeySubmit} />
+            {!isApiKeyValid ? (
+              <div className="p-6 bg-amber-50 rounded-lg border border-amber-200">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="h-5 w-5 text-amber-500 mt-0.5" />
+                  <div>
+                    <h3 className="text-lg font-medium mb-2 text-amber-800">Venice AI API Key Missing</h3>
+                    <p className="text-sm text-amber-700 mb-4">
+                      The application is missing a valid Venice AI API key. Please update the <code className="bg-amber-100 px-1.5 py-0.5 rounded">src/config/apiConfig.ts</code> file with your API key.
+                    </p>
+                  </div>
+                </div>
+              </div>
             ) : (
-              <GrantSearchForm 
-                apiKey={apiKey} 
-                onSearch={handleSearch} 
-              />
+              <GrantSearchForm onSearch={handleSearch} />
             )}
             
             {searchResults.length > 0 && (
@@ -116,16 +121,16 @@ const ExplorePage: React.FC = () => {
           </div>
           
           <div className="lg:col-span-2">
-            {!hasApiKey && (
+            {!isApiKeyValid && (
               <div className="bg-gray-50 rounded-lg border border-gray-200 p-8 text-center">
-                <h3 className="text-xl font-medium mb-2">Enter Your API Key to Get Started</h3>
+                <h3 className="text-xl font-medium mb-2">API Key Configuration Required</h3>
                 <p className="text-gray-600 mb-4">
-                  Provide your Venice AI API key to start searching for grants that match your research interests.
+                  Please update the application with your Venice AI API key in the <code className="bg-gray-100 px-1.5 py-0.5 rounded">src/config/apiConfig.ts</code> file to start searching for grants.
                 </p>
               </div>
             )}
             
-            {hasApiKey && searchResults.length === 0 && (
+            {isApiKeyValid && searchResults.length === 0 && (
               <div className="bg-gray-50 rounded-lg border border-gray-200 p-8 text-center">
                 <h3 className="text-xl font-medium mb-2">Ready to Find Your Perfect Grant</h3>
                 <p className="text-gray-600 mb-4">

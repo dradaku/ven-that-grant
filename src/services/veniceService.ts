@@ -1,6 +1,6 @@
-
 // This is a mock service for the Venice AI API
 // In a real implementation, this would make actual API calls
+import { VENICE_API_KEY, hasValidApiKey } from "../config/apiConfig";
 
 export interface GrantResult {
   id: number;
@@ -15,7 +15,6 @@ export interface GrantResult {
 }
 
 export async function searchGrants(
-  apiKey: string, 
   query: string,
   options?: {
     description?: string;
@@ -24,9 +23,14 @@ export async function searchGrants(
     includePrivate?: boolean;
   }
 ): Promise<GrantResult[]> {
+  // Check if API key is available
+  if (!hasValidApiKey()) {
+    throw new Error("Venice AI API key is missing or invalid. Please update the apiConfig.ts file with your API key.");
+  }
+  
   // In a real implementation, this would call the Venice AI API
   // For now, we'll return mock data
-  console.log("Searching grants with Venice AI API", { query, ...options });
+  console.log("Searching grants with Venice AI API", { apiKey: "***Hidden***", query, ...options });
   
   // Simulate API call delay
   await new Promise(resolve => setTimeout(resolve, 1500));
@@ -90,11 +94,4 @@ export async function searchGrants(
   ];
 }
 
-// In a real implementation, this would verify the API key
-export async function verifyApiKey(apiKey: string): Promise<boolean> {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 800));
-  
-  // For demo purposes, any non-empty string is considered valid
-  return !!apiKey.trim();
-}
+// No longer need to verify API key as it's globally configured

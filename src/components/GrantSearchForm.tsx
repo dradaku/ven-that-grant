@@ -9,13 +9,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { Loader2, Search } from 'lucide-react';
+import { searchGrants, GrantResult } from '@/services/veniceService';
 
 interface GrantSearchFormProps {
-  apiKey: string;
-  onSearch: (results: any[]) => void;
+  onSearch: (results: GrantResult[]) => void;
 }
 
-const GrantSearchForm: React.FC<GrantSearchFormProps> = ({ apiKey, onSearch }) => {
+const GrantSearchForm: React.FC<GrantSearchFormProps> = ({ onSearch }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
   const [description, setDescription] = useState('');
@@ -39,59 +39,30 @@ const GrantSearchForm: React.FC<GrantSearchFormProps> = ({ apiKey, onSearch }) =
     setIsLoading(true);
     
     try {
-      // In a real implementation, we would call the Venice AI API here
-      // For now, we'll simulate a search with mock data
-      setTimeout(() => {
-        const mockResults = [
-          {
-            id: 1,
-            title: "Innovation in Climate Research Grant",
-            organization: "National Science Foundation",
-            amount: "$50,000 - $500,000",
-            deadline: "2025-06-30",
-            description: "Funding for innovative approaches to climate change research and mitigation strategies.",
-            match_score: 92,
-            url: "https://example.com/grant1",
-            type: "government"
-          },
-          {
-            id: 2,
-            title: "Creative Arts Impact Initiative",
-            organization: "Arts Foundation",
-            amount: "$10,000 - $25,000",
-            deadline: "2025-05-15",
-            description: "Supporting creative projects that demonstrate social impact in local communities.",
-            match_score: 87,
-            url: "https://example.com/grant2",
-            type: "private"
-          },
-          {
-            id: 3,
-            title: "Emerging Technology Research Program",
-            organization: "Department of Energy",
-            amount: "$100,000 - $1,000,000",
-            deadline: "2025-07-22",
-            description: "Funding for research in emerging technology fields with potential for energy innovation.",
-            match_score: 85,
-            url: "https://example.com/grant3",
-            type: "government"
-          }
-        ];
-        
-        onSearch(mockResults);
-        setIsLoading(false);
-        
-        toast({
-          title: "Search Complete",
-          description: `Found ${mockResults.length} grants matching your criteria`,
-        });
-      }, 2000);
+      // Call the searchGrants function directly without passing apiKey
+      const results = await searchGrants(
+        query, 
+        {
+          description,
+          category: category || undefined,
+          includeGovernment,
+          includePrivate
+        }
+      );
+      
+      onSearch(results);
+      
+      toast({
+        title: "Search Complete",
+        description: `Found ${results.length} grants matching your criteria`,
+      });
     } catch (error) {
       toast({
         title: "Search Failed",
-        description: "An error occurred while searching for grants. Please try again.",
+        description: error instanceof Error ? error.message : "An error occurred while searching for grants. Please try again.",
         variant: "destructive",
       });
+    } finally {
       setIsLoading(false);
     }
   };
