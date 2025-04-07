@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import GrantSearchForm from '@/components/GrantSearchForm';
@@ -9,9 +8,10 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
-import { RefreshCw, Filter, AlertTriangle } from 'lucide-react';
+import { RefreshCw, Filter, AlertTriangle, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useSearchParams } from 'react-router-dom';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const ExplorePage: React.FC = () => {
   const [searchResults, setSearchResults] = useState<GrantResult[]>([]);
@@ -23,10 +23,8 @@ const ExplorePage: React.FC = () => {
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
   
-  // Check if API key is valid on component mount
   const isApiKeyValid = hasValidApiKey();
 
-  // Effect to handle URL query parameter
   useEffect(() => {
     const queryParam = searchParams.get('query');
     if (queryParam && isApiKeyValid) {
@@ -104,9 +102,17 @@ const ExplorePage: React.FC = () => {
     <Layout>
       <div className="container py-8">
         <h1 className="text-3xl font-bold mb-2">Explore Grants</h1>
-        <p className="text-xl text-gray-600 mb-8">
+        <p className="text-xl text-gray-600 mb-4">
           Find the perfect funding opportunities for your research or creative project
         </p>
+        
+        <Alert className="mb-8">
+          <Info className="h-4 w-4" />
+          <AlertTitle>Demo Mode</AlertTitle>
+          <AlertDescription>
+            This is a demonstration using sample grants data. In a production version, this would connect to the Venice AI API to retrieve real grant opportunities.
+          </AlertDescription>
+        </Alert>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 space-y-6">
