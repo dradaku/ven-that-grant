@@ -19,7 +19,7 @@ const Navbar: React.FC = () => {
           <Link to="/" className="flex items-center gap-2">
             <Sparkles className="h-6 w-6 text-brand-purple" />
             <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-brand-blue to-brand-purple">
-              GrantWhisper
+              VenThatGrant
             </span>
           </Link>
         </div>

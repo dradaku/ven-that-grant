@@ -14,7 +14,7 @@ const Footer: React.FC = () => {
             <div className="flex items-center gap-2">
               <Sparkles className="h-6 w-6 text-brand-purple" />
               <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-brand-blue to-brand-purple">
-                GrantWhisper
+                VenThatGrant
               </span>
             </div>
             <p className="text-gray-600 text-sm">
@@ -73,7 +73,7 @@ const Footer: React.FC = () => {
         
         <div className="border-t border-gray-200 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-500 text-sm">
-            &copy; {currentYear} GrantWhisper. All rights reserved.
+            &copy; {currentYear} VenThatGrant. All rights reserved.
           </p>
           <div className="mt-4 md:mt-0 flex space-x-6">
             <Link to="/privacy" className="text-gray-500 hover:text-brand-purple text-sm transition-colors">
