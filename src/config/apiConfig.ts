@@ -8,5 +8,7 @@ export const VENICE_API_KEY = "vHr1A25Y7V8ObYcGwqHTJOuvFKnOmFtyd-eapHxdBZ"; // R
 export function hasValidApiKey(): boolean {
   const placeholderKey = "your-venice-api-key-here";
   // Check if the API key exists, is not empty, and is not the placeholder text
-  return Boolean(VENICE_API_KEY) && VENICE_API_KEY.length > 0 && VENICE_API_KEY !== placeholderKey;
+  return Boolean(VENICE_API_KEY) && 
+         VENICE_API_KEY.length > 0 && 
+         String(VENICE_API_KEY) !== String(placeholderKey);
 }
