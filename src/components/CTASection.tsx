@@ -14,7 +14,7 @@ const CTASection: React.FC = () => {
                 Start Finding Perfect Grants Today
               </h2>
               <p className="text-lg md:text-xl opacity-90">
-                Join thousands of researchers and creatives who have found their ideal funding opportunities with GrantWhisper.
+                Join thousands of researchers and creatives who have found their ideal funding opportunities with VenThatGrant.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                 <Button size="lg" variant="default" className="bg-white text-brand-purple hover:bg-gray-100">
