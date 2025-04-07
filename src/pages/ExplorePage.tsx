@@ -17,6 +17,7 @@ const ExplorePage: React.FC = () => {
   const [searchResults, setSearchResults] = useState<GrantResult[]>([]);
   const [filteredResults, setFilteredResults] = useState<GrantResult[]>([]);
   const [activeTab, setActiveTab] = useState('all');
+  const [activeCountry, setActiveCountry] = useState('all');
   const [minMatchScore, setMinMatchScore] = useState(70);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
@@ -64,22 +65,37 @@ const ExplorePage: React.FC = () => {
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    
-    if (value === 'all') {
-      setFilteredResults(searchResults);
-    } else {
-      setFilteredResults(searchResults.filter(grant => grant.type === value));
-    }
+    applyFilters(value, activeCountry, minMatchScore);
+  };
+
+  const handleCountryChange = (value: string) => {
+    setActiveCountry(value);
+    applyFilters(activeTab, value, minMatchScore);
   };
 
   const handleScoreFilterChange = (value: number[]) => {
     const score = value[0];
     setMinMatchScore(score);
-    setFilteredResults(searchResults.filter(grant => grant.match_score >= score));
+    applyFilters(activeTab, activeCountry, score);
+  };
+
+  const applyFilters = (grantType: string, country: string, score: number) => {
+    let results = searchResults.filter(grant => grant.match_score >= score);
+    
+    if (grantType !== 'all') {
+      results = results.filter(grant => grant.type === grantType);
+    }
+    
+    if (country !== 'all') {
+      results = results.filter(grant => grant.country === country);
+    }
+    
+    setFilteredResults(results);
   };
 
   const resetFilters = () => {
     setActiveTab('all');
+    setActiveCountry('all');
     setMinMatchScore(70);
     setFilteredResults(searchResults);
   };
@@ -142,11 +158,23 @@ const ExplorePage: React.FC = () => {
                 </div>
                 
                 <div className="pt-2">
+                  <Label className="mb-2 block">Grant Type</Label>
                   <Tabs defaultValue="all" value={activeTab} onValueChange={handleTabChange}>
                     <TabsList className="w-full">
                       <TabsTrigger value="all" className="flex-1">All</TabsTrigger>
                       <TabsTrigger value="government" className="flex-1">Government</TabsTrigger>
                       <TabsTrigger value="private" className="flex-1">Private</TabsTrigger>
+                    </TabsList>
+                  </Tabs>
+                </div>
+                
+                <div className="pt-2">
+                  <Label className="mb-2 block">Country</Label>
+                  <Tabs defaultValue="all" value={activeCountry} onValueChange={handleCountryChange}>
+                    <TabsList className="w-full">
+                      <TabsTrigger value="all" className="flex-1">All</TabsTrigger>
+                      <TabsTrigger value="US" className="flex-1">US</TabsTrigger>
+                      <TabsTrigger value="UK" className="flex-1">UK</TabsTrigger>
                     </TabsList>
                   </Tabs>
                 </div>

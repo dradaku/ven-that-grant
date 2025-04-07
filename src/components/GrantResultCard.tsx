@@ -1,91 +1,83 @@
 
 import React from 'react';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Calendar, DollarSign, Building } from 'lucide-react';
-
-interface GrantResult {
-  id: number;
-  title: string;
-  organization: string;
-  amount: string;
-  deadline: string;
-  description: string;
-  match_score: number;
-  url: string;
-  type: string;
-}
+import { ExternalLink } from 'lucide-react';
+import { GrantResult } from '@/services/veniceService';
+import { Badge } from '@/components/ui/badge';
 
 interface GrantResultCardProps {
   grant: GrantResult;
 }
 
 const GrantResultCard: React.FC<GrantResultCardProps> = ({ grant }) => {
-  // Calculate days until deadline
-  const deadlineDate = new Date(grant.deadline);
-  const today = new Date();
-  const daysUntil = Math.ceil((deadlineDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-  
-  // Format deadline for display
-  const formattedDeadline = deadlineDate.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
+  const formatMatchScore = (score: number) => {
+    return `${score}%`;
+  };
+
+  // Color gradient based on match score
+  const getMatchScoreColor = (score: number) => {
+    if (score >= 90) return 'bg-emerald-500';
+    if (score >= 80) return 'bg-green-500';
+    if (score >= 70) return 'bg-lime-500';
+    if (score >= 60) return 'bg-yellow-500';
+    return 'bg-orange-500';
+  };
 
   return (
-    <Card className="h-full flex flex-col transition-all duration-200 hover:shadow-md border-l-4 border-l-brand-purple">
-      <CardHeader>
-        <div className="flex justify-between items-start">
-          <div>
-            <CardTitle className="text-lg font-bold">{grant.title}</CardTitle>
-            <CardDescription className="flex items-center mt-1">
-              <Building className="h-4 w-4 mr-1" />
-              {grant.organization}
-            </CardDescription>
-          </div>
-          <Badge className={`${grant.match_score > 90 ? 'bg-green-600' : grant.match_score > 80 ? 'bg-brand-purple' : 'bg-gray-500'}`}>
-            {grant.match_score}% Match
-          </Badge>
-        </div>
-      </CardHeader>
-      <CardContent className="flex-grow">
-        <p className="text-gray-700 text-sm mb-4">{grant.description}</p>
-        
-        <div className="grid grid-cols-2 gap-2 text-sm">
-          <div className="flex items-center text-gray-600">
-            <DollarSign className="h-4 w-4 mr-1 text-gray-400" />
-            {grant.amount}
-          </div>
-          
-          <div className="flex items-center text-gray-600">
-            <Calendar className="h-4 w-4 mr-1 text-gray-400" />
-            <span className={daysUntil < 30 ? 'text-red-600 font-medium' : ''}>
-              {formattedDeadline}
+    <Card className="overflow-hidden transition-all hover:shadow-md">
+      <CardContent className="p-0">
+        <div className="flex flex-col md:flex-row">
+          {/* Match score indicator */}
+          <div className={`${getMatchScoreColor(grant.match_score)} text-white font-bold py-2 px-3 md:w-16 md:py-0 md:flex md:items-center md:justify-center`}>
+            <span className="md:rotate-90 md:transform md:whitespace-nowrap">
+              {formatMatchScore(grant.match_score)}
             </span>
           </div>
+          
+          {/* Grant content */}
+          <div className="flex-1 p-5">
+            <div className="flex flex-wrap justify-between items-start gap-2 mb-3">
+              <h3 className="text-lg font-bold text-gray-900 flex-1">{grant.title}</h3>
+              
+              <div className="flex gap-1">
+                <Badge variant="outline" className="capitalize">
+                  {grant.type}
+                </Badge>
+                {grant.country && (
+                  <Badge variant="secondary" className="capitalize">
+                    {grant.country}
+                  </Badge>
+                )}
+              </div>
+            </div>
+            
+            <div className="mb-3 text-sm text-gray-500">
+              {grant.organization}
+            </div>
+            
+            <p className="mb-4 text-gray-700">{grant.description}</p>
+            
+            <div className="flex flex-wrap justify-between items-center gap-3">
+              <div className="space-y-1">
+                <div className="text-sm">
+                  <span className="font-medium">Amount:</span> {grant.amount}
+                </div>
+                <div className="text-sm">
+                  <span className="font-medium">Deadline:</span> {new Date(grant.deadline).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </div>
+              </div>
+              
+              <Button asChild variant="outline" size="sm" className="ml-auto">
+                <a href={grant.url} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  View Grant
+                </a>
+              </Button>
+            </div>
+          </div>
         </div>
-        
-        {daysUntil < 30 && (
-          <Badge variant="outline" className="mt-3 text-red-600 border-red-200 bg-red-50">
-            {daysUntil <= 0 ? 'Deadline passed' : `${daysUntil} days remaining`}
-          </Badge>
-        )}
       </CardContent>
-      <CardFooter className="border-t pt-4">
-        <div className="w-full flex justify-between items-center">
-          <Badge variant="outline" className={`capitalize ${grant.type === 'government' ? 'border-blue-200 bg-blue-50 text-blue-600' : 'border-purple-200 bg-purple-50 text-purple-600'}`}>
-            {grant.type}
-          </Badge>
-          <Button variant="ghost" size="sm" className="text-brand-purple hover:text-brand-blue hover:bg-brand-purple/10" asChild>
-            <a href={grant.url} target="_blank" rel="noopener noreferrer">
-              View Details
-              <ExternalLink className="ml-1 h-4 w-4" />
-            </a>
-          </Button>
-        </div>
-      </CardFooter>
     </Card>
   );
 };

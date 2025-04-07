@@ -1,3 +1,4 @@
+
 // This is a mock service for the Venice AI API
 // In a real implementation, this would make actual API calls
 import { VENICE_API_KEY, hasValidApiKey } from "../config/apiConfig";
@@ -12,6 +13,7 @@ export interface GrantResult {
   match_score: number;
   url: string;
   type: string;
+  country?: string;
 }
 
 export async function searchGrants(
@@ -45,7 +47,8 @@ export async function searchGrants(
       description: "Funding for innovative approaches to climate change research and mitigation strategies.",
       match_score: 92,
       url: "https://example.com/grant1",
-      type: "government"
+      type: "government",
+      country: "US"
     },
     {
       id: 2,
@@ -56,7 +59,8 @@ export async function searchGrants(
       description: "Supporting creative projects that demonstrate social impact in local communities.",
       match_score: 87,
       url: "https://example.com/grant2",
-      type: "private"
+      type: "private",
+      country: "US"
     },
     {
       id: 3,
@@ -67,7 +71,8 @@ export async function searchGrants(
       description: "Funding for research in emerging technology fields with potential for energy innovation.",
       match_score: 85,
       url: "https://example.com/grant3",
-      type: "government"
+      type: "government",
+      country: "US"
     },
     {
       id: 4,
@@ -78,7 +83,8 @@ export async function searchGrants(
       description: "Supporting innovative approaches to improving community health outcomes.",
       match_score: 78,
       url: "https://example.com/grant4",
-      type: "private"
+      type: "private",
+      country: "US"
     },
     {
       id: 5,
@@ -89,7 +95,56 @@ export async function searchGrants(
       description: "Funding for projects that enhance scholarly research, teaching, and public programming in the humanities through digital methods.",
       match_score: 76,
       url: "https://example.com/grant5",
-      type: "government"
+      type: "government",
+      country: "US"
+    },
+    {
+      id: 6,
+      title: "UK Research and Innovation (UKRI) Grant",
+      organization: "UKRI",
+      amount: "£50,000 - £500,000",
+      deadline: "2025-08-25",
+      description: "Funding for groundbreaking research projects across all disciplines in the United Kingdom.",
+      match_score: 94,
+      url: "https://example.com/ukgrant1",
+      type: "government",
+      country: "UK"
+    },
+    {
+      id: 7,
+      title: "Arts Council England Project Grant",
+      organization: "Arts Council England",
+      amount: "£5,000 - £100,000",
+      deadline: "2025-07-15",
+      description: "Supporting arts organizations, individual artists, community and cultural organizations in England.",
+      match_score: 89,
+      url: "https://example.com/ukgrant2",
+      type: "government",
+      country: "UK"
+    },
+    {
+      id: 8,
+      title: "Wellcome Trust Research Fellowship",
+      organization: "Wellcome Trust",
+      amount: "£250,000 - £400,000",
+      deadline: "2025-09-30",
+      description: "Supporting researchers in health-related research and innovation that enriches our understanding of human and animal health.",
+      match_score: 82,
+      url: "https://example.com/ukgrant3",
+      type: "private",
+      country: "UK"
+    },
+    {
+      id: 9,
+      title: "Leverhulme Trust Research Project Grant",
+      organization: "Leverhulme Trust",
+      amount: "£10,000 - £500,000",
+      deadline: "2025-09-01",
+      description: "Funding for research projects in any subject area where applications have exceptional merit.",
+      match_score: 80,
+      url: "https://example.com/ukgrant4",
+      type: "private",
+      country: "UK"
     }
   ];
 }

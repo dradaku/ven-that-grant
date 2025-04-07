@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -65,7 +66,7 @@ const HeroSection: React.FC = () => {
           </form>
           
           <div className="pt-4 text-sm text-gray-500">
-            Scanning funding sources from NSF, NIH, NEA, NEH, and private foundations
+            Scanning funding sources from NSF, NIH, NEA, NEH, UKRI, Arts Council England, and private foundations
           </div>
         </div>
       </div>
