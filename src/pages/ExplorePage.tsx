@@ -3,7 +3,8 @@ import Layout from '@/components/Layout';
 import GrantSearchForm from '@/components/GrantSearchForm';
 import GrantResultCard from '@/components/GrantResultCard';
 import { searchGrants, GrantResult } from '@/services/veniceService';
-import { hasValidApiKey } from '@/config/apiConfig';
+import { hasValidApiKey, setVeniceApiKey } from '@/config/apiConfig';
+import ApiKeyInput from '@/components/ApiKeyInput';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
@@ -21,20 +22,28 @@ const ExplorePage: React.FC = () => {
   const [minMatchScore, setMinMatchScore] = useState(70);
   const [isLoading, setIsLoading] = useState(false);
   const [usingSampleData, setUsingSampleData] = useState(false);
+  const [hasApiKey, setHasApiKey] = useState(hasValidApiKey());
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
-  
-  const isApiKeyValid = hasValidApiKey();
 
   useEffect(() => {
     const queryParam = searchParams.get('query');
-    if (queryParam && isApiKeyValid) {
+    if (queryParam && hasApiKey) {
       performSearch(queryParam);
     }
-  }, [searchParams, isApiKeyValid]);
+  }, [searchParams, hasApiKey]);
+
+  const handleApiKeySubmit = (apiKey: string) => {
+    setVeniceApiKey(apiKey);
+    setHasApiKey(true);
+    toast({
+      title: "API Key Updated",
+      description: "Your Venice AI API key has been updated. You can now search for grants.",
+    });
+  };
 
   const performSearch = async (query: string) => {
-    if (!isApiKeyValid) return;
+    if (!hasApiKey) return;
     
     setIsLoading(true);
     setUsingSampleData(false);
@@ -129,18 +138,8 @@ const ExplorePage: React.FC = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 space-y-6">
-            {!isApiKeyValid ? (
-              <div className="p-6 bg-amber-50 rounded-lg border border-amber-200">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-amber-500 mt-0.5" />
-                  <div>
-                    <h3 className="text-lg font-medium mb-2 text-amber-800">Venice AI API Key Missing</h3>
-                    <p className="text-sm text-amber-700 mb-4">
-                      The application is missing a valid Venice AI API key. Please update the <code className="bg-amber-100 px-1.5 py-0.5 rounded">src/config/apiConfig.ts</code> file with your API key.
-                    </p>
-                  </div>
-                </div>
-              </div>
+            {!hasApiKey ? (
+              <ApiKeyInput onApiKeySubmit={handleApiKeySubmit} />
             ) : (
               <GrantSearchForm onSearch={handleSearch} />
             )}
@@ -200,16 +199,16 @@ const ExplorePage: React.FC = () => {
           </div>
           
           <div className="lg:col-span-2">
-            {!isApiKeyValid && (
+            {!hasApiKey && (
               <div className="bg-gray-50 rounded-lg border border-gray-200 p-8 text-center">
-                <h3 className="text-xl font-medium mb-2">API Key Configuration Required</h3>
+                <h3 className="text-xl font-medium mb-2">API Key Required</h3>
                 <p className="text-gray-600 mb-4">
-                  Please update the application with your Venice AI API key in the <code className="bg-gray-100 px-1.5 py-0.5 rounded">src/config/apiConfig.ts</code> file to start searching for grants.
+                  Please enter your Venice AI API key to start searching for grants.
                 </p>
               </div>
             )}
             
-            {isApiKeyValid && searchResults.length === 0 && !isLoading && (
+            {hasApiKey && searchResults.length === 0 && !isLoading && (
               <div className="bg-gray-50 rounded-lg border border-gray-200 p-8 text-center">
                 <h3 className="text-xl font-medium mb-2">Ready to Find Your Perfect Grant</h3>
                 <p className="text-gray-600 mb-4">

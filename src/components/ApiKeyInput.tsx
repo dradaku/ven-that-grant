@@ -1,9 +1,10 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { AlertCircle, Check } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { setVeniceApiKey, hasValidApiKey } from '@/config/apiConfig';
 
 interface ApiKeyInputProps {
   onApiKeySubmit: (apiKey: string) => void;
@@ -14,6 +15,16 @@ const ApiKeyInput: React.FC<ApiKeyInputProps> = ({ onApiKeySubmit }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const { toast } = useToast();
+
+  // Check if API key already exists in localStorage on component mount
+  useEffect(() => {
+    const storedKey = localStorage.getItem('veniceApiKey');
+    if (storedKey && hasValidApiKey()) {
+      setApiKey(storedKey);
+      setIsVerified(true);
+      onApiKeySubmit(storedKey);
+    }
+  }, [onApiKeySubmit]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,14 +41,16 @@ const ApiKeyInput: React.FC<ApiKeyInputProps> = ({ onApiKeySubmit }) => {
     setIsSubmitting(true);
     
     try {
-      // In a real implementation, we would verify the API key
-      // For now, we'll simulate a successful verification
+      // Store the API key in localStorage
+      setVeniceApiKey(apiKey);
+      
+      // Simulate verification (in a real app, you'd verify with an API call)
       setTimeout(() => {
         setIsVerified(true);
         onApiKeySubmit(apiKey);
         toast({
-          title: "API Key Verified",
-          description: "Your Venice AI API key has been successfully verified",
+          title: "API Key Saved",
+          description: "Your Venice AI API key has been saved and will be used for searches",
         });
         setIsSubmitting(false);
       }, 1000);
