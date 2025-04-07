@@ -23,7 +23,7 @@ const About: React.FC = () => {
               VenThatGrant was born from a simple observation: finding the right grant is often harder than doing the actual research or creative work. 
             </p>
             <p className="text-gray-600 mb-4">
-              Founded by a team of researchers and AI specialists, we set out to build a platform that understands the nuances of different research fields and creative disciplines, making the funding discovery process intuitive and effective.
+              Founded by a team of researchers, creatives, academics and AI specialists, we set out to build a platform that understands the nuances of different research fields and creative disciplines, making the funding discovery process intuitive and effective.
             </p>
             <p className="text-gray-600">
               By leveraging the power of Venice AI technology, we've created a platform that not only finds grants but truly understands your research context and creative vision.
