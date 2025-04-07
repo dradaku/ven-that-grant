@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import GrantSearchForm from '@/components/GrantSearchForm';
 import GrantResultCard from '@/components/GrantResultCard';
@@ -11,6 +11,7 @@ import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
 import { RefreshCw, Filter, AlertTriangle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useSearchParams } from 'react-router-dom';
 
 const ExplorePage: React.FC = () => {
   const [searchResults, setSearchResults] = useState<GrantResult[]>([]);
@@ -19,9 +20,42 @@ const ExplorePage: React.FC = () => {
   const [minMatchScore, setMinMatchScore] = useState(70);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
   
   // Check if API key is valid on component mount
   const isApiKeyValid = hasValidApiKey();
+
+  // Effect to handle URL query parameter
+  useEffect(() => {
+    const queryParam = searchParams.get('query');
+    if (queryParam && isApiKeyValid) {
+      performSearch(queryParam);
+    }
+  }, [searchParams, isApiKeyValid]);
+
+  const performSearch = async (query: string) => {
+    if (!isApiKeyValid) return;
+    
+    setIsLoading(true);
+    try {
+      const results = await searchGrants(query);
+      setSearchResults(results);
+      setFilteredResults(results);
+      
+      toast({
+        title: "Search Complete",
+        description: `Found ${results.length} grants matching your criteria`,
+      });
+    } catch (error) {
+      toast({
+        title: "Search Failed",
+        description: error instanceof Error ? error.message : "An error occurred while searching for grants. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSearch = async (results: GrantResult[]) => {
     setSearchResults(results);
@@ -130,7 +164,7 @@ const ExplorePage: React.FC = () => {
               </div>
             )}
             
-            {isApiKeyValid && searchResults.length === 0 && (
+            {isApiKeyValid && searchResults.length === 0 && !isLoading && (
               <div className="bg-gray-50 rounded-lg border border-gray-200 p-8 text-center">
                 <h3 className="text-xl font-medium mb-2">Ready to Find Your Perfect Grant</h3>
                 <p className="text-gray-600 mb-4">
@@ -139,7 +173,19 @@ const ExplorePage: React.FC = () => {
               </div>
             )}
             
-            {searchResults.length > 0 && (
+            {isLoading && (
+              <div className="bg-gray-50 rounded-lg border border-gray-200 p-8 text-center">
+                <h3 className="text-xl font-medium mb-2">Searching for Grants</h3>
+                <p className="text-gray-600 mb-4">
+                  Looking for the perfect grants that match your criteria...
+                </p>
+                <div className="flex justify-center">
+                  <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-brand-purple"></div>
+                </div>
+              </div>
+            )}
+            
+            {searchResults.length > 0 && !isLoading && (
               <div>
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-semibold">

@@ -1,13 +1,14 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection: React.FC = () => {
   const [query, setQuery] = useState('');
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,11 +21,8 @@ const HeroSection: React.FC = () => {
       return;
     }
 
-    // In a real implementation, we would navigate to search results
-    toast({
-      title: "Search initiated",
-      description: `Searching for grants related to: ${query}`,
-    });
+    // Navigate to the explore page with the search query
+    navigate(`/explore?query=${encodeURIComponent(query)}`);
   };
 
   return (
