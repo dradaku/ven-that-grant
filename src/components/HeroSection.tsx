@@ -35,10 +35,10 @@ const HeroSection: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center space-y-8">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-brand-blue to-brand-purple">
-              Discover Perfect Grants
+              Discover & Apply for Grants
             </span>
             <br />
-            <span>for Your Vision</span>
+            <span>Shape That Vision</span>
           </h1>
           
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -75,4 +75,3 @@ const HeroSection: React.FC = () => {
 };
 
 export default HeroSection;
-
