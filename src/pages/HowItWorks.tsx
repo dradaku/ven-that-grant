@@ -99,7 +99,7 @@ const HowItWorks: React.FC = () => {
                   <span className="text-gray-700">Personalised match scoring based on your profile</span>
                 </li>
               </ul>
-              <Button asChild className="bg-brand-purple hover:bg-brand-blue transition-colours">
+              <Button asChild className="bg-brand-purple hover:bg-brand-blue transition-colors">
                 <Link to="/explore">
                   Start Exploring Grants
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -155,3 +155,4 @@ const HowItWorks: React.FC = () => {
 };
 
 export default HowItWorks;
+

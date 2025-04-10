@@ -58,7 +58,7 @@ const HeroSection: React.FC = () => {
             </div>
             <Button 
               type="submit" 
-              className="bg-brand-purple hover:bg-brand-blue transition-colours rounded-l-none"
+              className="bg-brand-purple hover:bg-brand-blue transition-colors rounded-l-none"
             >
               <span className="hidden sm:inline">Find Grants</span>
               <ArrowRight className="h-5 w-5 sm:ml-2" />
@@ -75,3 +75,4 @@ const HeroSection: React.FC = () => {
 };
 
 export default HeroSection;
+
