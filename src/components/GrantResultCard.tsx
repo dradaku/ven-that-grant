@@ -24,6 +24,17 @@ const GrantResultCard: React.FC<GrantResultCardProps> = ({ grant }) => {
     return 'bg-orange-500';
   };
 
+  const randomEncouragement = () => {
+    const encouragements = [
+      "You've got this!",
+      "Let's get that grant!",
+      "This one has your name on it!",
+      "Perfect match for your work!",
+      "Time to shine with this opportunity!"
+    ];
+    return encouragements[Math.floor(Math.random() * encouragements.length)];
+  };
+
   return (
     <Card className="overflow-hidden transition-all hover:shadow-md">
       <CardContent className="p-0">
@@ -58,6 +69,20 @@ const GrantResultCard: React.FC<GrantResultCardProps> = ({ grant }) => {
             
             <p className="mb-4 text-gray-700">{grant.description}</p>
             
+            {grant.fit_reason && (
+              <div className="mb-4 p-3 bg-blue-50 rounded-md">
+                <h4 className="font-medium mb-1">Why This Fits You:</h4>
+                <p className="text-gray-700">{grant.fit_reason}</p>
+              </div>
+            )}
+            
+            {grant.draft_paragraph && (
+              <div className="mb-4 p-3 bg-green-50 rounded-md">
+                <h4 className="font-medium mb-1">Application Draft:</h4>
+                <p className="text-gray-700 italic">{grant.draft_paragraph}</p>
+              </div>
+            )}
+            
             <div className="flex flex-wrap justify-between items-center gap-3">
               <div className="space-y-1">
                 <div className="text-sm">
@@ -68,12 +93,17 @@ const GrantResultCard: React.FC<GrantResultCardProps> = ({ grant }) => {
                 </div>
               </div>
               
-              <Button asChild variant="outline" size="sm" className="ml-auto">
-                <a href={grant.url} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  View Grant
-                </a>
-              </Button>
+              <div className="ml-auto space-y-2">
+                <div className="text-sm font-medium text-brand-purple">
+                  {randomEncouragement()}
+                </div>
+                <Button asChild variant="outline" size="sm">
+                  <a href={grant.url} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="h-4 w-4 mr-2" />
+                    View Grant
+                  </a>
+                </Button>
+              </div>
             </div>
           </div>
         </div>

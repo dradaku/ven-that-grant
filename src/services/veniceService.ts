@@ -1,5 +1,5 @@
 
-// Service for the Venice AI API
+// Service for the VenThatGrant™ AI API
 import { getVeniceApiKey } from "../config/apiConfig";
 
 export interface GrantResult {
@@ -13,6 +13,16 @@ export interface GrantResult {
   url: string;
   type: string;
   country?: string;
+  fit_reason?: string;
+  draft_paragraph?: string;
+}
+
+export interface UserProfile {
+  role: string;
+  fundingTypes: string[];
+  region: string;
+  minGrantSize: string;
+  email?: string;
 }
 
 export async function searchGrants(
@@ -22,10 +32,11 @@ export async function searchGrants(
     category?: string;
     includeGovernment?: boolean;
     includePrivate?: boolean;
+    userProfile?: UserProfile;
   }
 ): Promise<GrantResult[]> {
   try {
-    console.log("Searching grants with Venice AI API", { query, ...options });
+    console.log("Searching grants with VenThatGrant AI", { query, ...options });
     
     // Get the predefined API key
     const VENICE_API_KEY = getVeniceApiKey();
@@ -40,7 +51,8 @@ export async function searchGrants(
       filters: {
         includeGovernment: options?.includeGovernment !== false,
         includePrivate: options?.includePrivate !== false
-      }
+      },
+      userProfile: options?.userProfile || null
     };
     
     const response = await fetch(apiUrl, {
@@ -63,7 +75,7 @@ export async function searchGrants(
     return data.grants as GrantResult[];
     
   } catch (error) {
-    console.error("Venice AI API Error:", error);
-    throw error; // Rethrow the error instead of falling back to sample data
+    console.error("VenThatGrant AI Error:", error);
+    throw error;
   }
 }

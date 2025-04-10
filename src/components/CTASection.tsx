@@ -14,7 +14,7 @@ const CTASection: React.FC = () => {
                 Start Finding Perfect Grants Today
               </h2>
               <p className="text-lg md:text-xl opacity-90">
-                Join thousands of researchers and creatives who have found their ideal funding opportunities with VenThatGrant.
+                Join thousands of researchers and creatives who have found their ideal funding opportunities with VenThatGrant™.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                 <Button size="lg" variant="default" className="bg-white text-brand-purple hover:bg-gray-100">
@@ -26,7 +26,7 @@ const CTASection: React.FC = () => {
                 </Button>
               </div>
               <p className="text-sm opacity-80 pt-4">
-                No credit card required. Free plan includes up to 10 grant searches per month.
+                No credit card required. Dr. Adaku's AI will match you with up to 5 grants per request.
               </p>
             </div>
           </div>
