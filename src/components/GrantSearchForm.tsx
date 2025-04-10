@@ -39,7 +39,7 @@ const GrantSearchForm: React.FC<GrantSearchFormProps> = ({ onSearch }) => {
     setIsLoading(true);
     
     try {
-      // Call the searchGrants function directly without passing apiKey
+      // Call the searchGrants function
       const results = await searchGrants(
         query, 
         {
@@ -57,11 +57,29 @@ const GrantSearchForm: React.FC<GrantSearchFormProps> = ({ onSearch }) => {
         description: `Found ${results.length} grants matching your criteria`,
       });
     } catch (error) {
+      console.error("Grant search error:", error);
       toast({
         title: "Search Failed",
-        description: error instanceof Error ? error.message : "An error occurred while searching for grants. Please try again.",
+        description: error instanceof Error ? error.message : "An error occurred while searching for grants. Using mock data instead.",
         variant: "destructive",
       });
+      
+      // Even if the search fails, we'll show some mock results
+      const mockResults = [
+        {
+          id: 999,
+          title: `${query} Research Grant (Sample)`,
+          organization: "Sample Foundation",
+          amount: "£10,000 - £50,000",
+          deadline: "2025-12-31",
+          description: `This is a sample grant for "${query}" research. The actual API call failed, but this shows what results would look like.`,
+          match_score: 85,
+          url: "#",
+          type: "Sample"
+        }
+      ];
+      
+      onSearch(mockResults);
     } finally {
       setIsLoading(false);
     }

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -75,6 +74,15 @@ const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch }) => {
   });
 
   const onSubmit = async (values: FormValues) => {
+    if (!values.query) {
+      toast({
+        title: "Research Topic Required",
+        description: "Please enter a research topic or project description",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsLoading(true);
     
     const userProfile: UserProfile = {
@@ -101,11 +109,15 @@ const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch }) => {
         description: `Found ${results.length} grants matching your profile`,
       });
     } catch (error) {
+      console.error("Grant finder error:", error);
       toast({
         title: "Search Failed",
-        description: error instanceof Error ? error.message : "An error occurred while searching for grants. Please try again.",
+        description: error instanceof Error ? error.message : "An error occurred while searching for grants. Using mock data instead.",
         variant: "destructive",
       });
+      
+      const mockResults = getMockFinderResults(values.query, values.role);
+      onSearch(mockResults);
     } finally {
       setIsLoading(false);
     }
@@ -319,5 +331,34 @@ const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch }) => {
     </Card>
   );
 };
+
+function getMockFinderResults(query: string, role: string): GrantResult[] {
+  return [
+    {
+      id: 201,
+      title: `${role} ${query} Grant Program`,
+      organization: "VenThatGrant Foundation",
+      amount: "£20,000 - £100,000",
+      deadline: "2025-09-30",
+      description: `A specialized grant program for ${role}s working on ${query} projects. This is a sample result since the API call failed.`,
+      match_score: 95,
+      url: "#",
+      type: role || "Research",
+      fit_reason: `As a ${role}, your work on ${query} perfectly matches our funding criteria.`
+    },
+    {
+      id: 202,
+      title: `${query} Innovation Fund`,
+      organization: "Sample Research Council",
+      amount: "£50,000 - £250,000",
+      deadline: "2026-01-15",
+      description: `Supporting innovative approaches to ${query}. This is a sample result since the API call failed.`,
+      match_score: 88,
+      url: "#",
+      type: "Innovation",
+      fit_reason: "Your project's innovative approach aligns with our funding priorities."
+    }
+  ];
+}
 
 export default GrantFinderForm;
