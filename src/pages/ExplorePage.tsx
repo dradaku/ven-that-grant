@@ -3,13 +3,12 @@ import Layout from '@/components/Layout';
 import GrantSearchForm from '@/components/GrantSearchForm';
 import GrantResultCard from '@/components/GrantResultCard';
 import { searchGrants, GrantResult } from '@/services/veniceService';
-import { hasValidApiKey, setVeniceApiKey } from '@/config/apiConfig';
-import ApiKeyInput from '@/components/ApiKeyInput';
+import { hasValidApiKey } from '@/config/apiConfig';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
-import { RefreshCw, Filter, AlertTriangle, Info } from 'lucide-react';
+import { RefreshCw, Filter, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useSearchParams } from 'react-router-dom';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -22,29 +21,17 @@ const ExplorePage: React.FC = () => {
   const [minMatchScore, setMinMatchScore] = useState(70);
   const [isLoading, setIsLoading] = useState(false);
   const [usingSampleData, setUsingSampleData] = useState(false);
-  const [hasApiKey, setHasApiKey] = useState(hasValidApiKey());
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
 
   useEffect(() => {
     const queryParam = searchParams.get('query');
-    if (queryParam && hasApiKey) {
+    if (queryParam) {
       performSearch(queryParam);
     }
-  }, [searchParams, hasApiKey]);
-
-  const handleApiKeySubmit = (apiKey: string) => {
-    setVeniceApiKey(apiKey);
-    setHasApiKey(true);
-    toast({
-      title: "API Key Updated",
-      description: "Your Venice AI API key has been updated. You can now search for grants.",
-    });
-  };
+  }, [searchParams]);
 
   const performSearch = async (query: string) => {
-    if (!hasApiKey) return;
-    
     setIsLoading(true);
     setUsingSampleData(false);
     
@@ -138,11 +125,7 @@ const ExplorePage: React.FC = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 space-y-6">
-            {!hasApiKey ? (
-              <ApiKeyInput onApiKeySubmit={handleApiKeySubmit} />
-            ) : (
-              <GrantSearchForm onSearch={handleSearch} />
-            )}
+            <GrantSearchForm onSearch={handleSearch} />
             
             <div className="bg-white border rounded-lg p-6 space-y-4">
               <div className="flex justify-between items-center">
@@ -199,16 +182,7 @@ const ExplorePage: React.FC = () => {
           </div>
           
           <div className="lg:col-span-2">
-            {!hasApiKey && (
-              <div className="bg-gray-50 rounded-lg border border-gray-200 p-8 text-center">
-                <h3 className="text-xl font-medium mb-2">API Key Required</h3>
-                <p className="text-gray-600 mb-4">
-                  Please enter your Venice AI API key to start searching for grants.
-                </p>
-              </div>
-            )}
-            
-            {hasApiKey && searchResults.length === 0 && !isLoading && (
+            {searchResults.length === 0 && !isLoading && (
               <div className="bg-gray-50 rounded-lg border border-gray-200 p-8 text-center">
                 <h3 className="text-xl font-medium mb-2">Ready to Find Your Perfect Grant</h3>
                 <p className="text-gray-600 mb-4">

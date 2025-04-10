@@ -1,6 +1,5 @@
-
 // Service for the Venice AI API
-import { getVeniceApiKey, hasValidApiKey } from "../config/apiConfig";
+import { getVeniceApiKey } from "../config/apiConfig";
 
 export interface GrantResult {
   id: number;
@@ -124,16 +123,11 @@ export async function searchGrants(
     includePrivate?: boolean;
   }
 ): Promise<GrantResult[]> {
-  // Check if API key is available
-  if (!hasValidApiKey()) {
-    throw new Error("Venice AI API key is missing or invalid. Please update your API key.");
-  }
-  
   try {
     console.log("Searching grants with Venice AI API", { query, ...options });
     
     try {
-      // Get the current API key from localStorage
+      // Get the predefined API key
       const VENICE_API_KEY = getVeniceApiKey();
       
       // Attempt to connect to the real Venice AI API

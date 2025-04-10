@@ -1,24 +1,22 @@
 
 // This file contains global API configuration
 // In a production environment, this would be set via environment variables
-// For this demo, we're retrieving the API key from localStorage if available
 
-// Get API key from localStorage or use placeholder
+// Predefined Venice API key for all users
+const VENICE_API_KEY = "vHr1A25Y7V8ObYcGwqHTJOuvFKnOmFtyd-eapHxdBZ";
+
+// Get API key - now returns the predefined key
 export const getVeniceApiKey = (): string => {
-  const storedKey = localStorage.getItem('veniceApiKey');
-  return storedKey || "vHr1A25Y7V8ObYcGwqHTJOuvFKnOmFtyd-eapHxdBZ"; // Placeholder key
+  return VENICE_API_KEY;
 };
 
+// All users have a valid API key since it's predefined
 export function hasValidApiKey(): boolean {
-  const apiKey = getVeniceApiKey();
-  const placeholderKey = "vHr1A25Y7V8ObYcGwqHTJOuvFKnOmFtyd-eapHxdBZ";
-  // Check if the API key exists, is not empty, and is not the placeholder text
-  return Boolean(apiKey) && 
-         apiKey.length > 0 && 
-         String(apiKey) !== String(placeholderKey);
+  return true;
 }
 
-// Function to set the API key in localStorage
+// This function is kept for backward compatibility but now does nothing
 export function setVeniceApiKey(apiKey: string): void {
-  localStorage.setItem('veniceApiKey', apiKey);
+  // No longer storing in localStorage as we use a predefined key
+  console.log("API key setting is disabled. Using predefined key.");
 }
