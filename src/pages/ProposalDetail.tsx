@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import CustomLayout from '@/components/CustomLayout';
 import { updateProposal, getProposals, getSavedGrants } from '@/services/proposalService';
@@ -9,6 +10,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import ProposalCritique from '@/components/ProposalCritique';
 
 const ProposalDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -152,35 +155,46 @@ const ProposalDetail: React.FC = () => {
           </Card>
         )}
         
-        <div className="space-y-6">
-          <div>
-            <label htmlFor="title" className="block text-sm font-medium mb-2">
-              Proposal Title
-            </label>
-            <Input
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Enter proposal title"
-              disabled={status === 'submitted'}
-              className="max-w-2xl"
-            />
-          </div>
+        <Tabs defaultValue="edit" className="w-full">
+          <TabsList className="mb-6">
+            <TabsTrigger value="edit">Edit Proposal</TabsTrigger>
+            <TabsTrigger value="critique">AI Critique</TabsTrigger>
+          </TabsList>
           
-          <div>
-            <label htmlFor="content" className="block text-sm font-medium mb-2">
-              Proposal Content
-            </label>
-            <Textarea
-              id="content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              placeholder="Write your proposal content"
-              disabled={status === 'submitted'}
-              className="min-h-[500px]"
-            />
-          </div>
-        </div>
+          <TabsContent value="edit" className="space-y-6">
+            <div>
+              <label htmlFor="title" className="block text-sm font-medium mb-2">
+                Proposal Title
+              </label>
+              <Input
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="Enter proposal title"
+                disabled={status === 'submitted'}
+                className="max-w-2xl"
+              />
+            </div>
+            
+            <div>
+              <label htmlFor="content" className="block text-sm font-medium mb-2">
+                Proposal Content
+              </label>
+              <Textarea
+                id="content"
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder="Write your proposal content"
+                disabled={status === 'submitted'}
+                className="min-h-[500px]"
+              />
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="critique">
+            {id && <ProposalCritique proposalId={id} />}
+          </TabsContent>
+        </Tabs>
       </div>
     </CustomLayout>
   );
