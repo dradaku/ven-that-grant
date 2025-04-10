@@ -66,7 +66,7 @@ const HeroSection: React.FC = () => {
           </form>
           
           <div className="pt-4 text-sm text-gray-500">
-            Scanning funding sources from NSF, NIH, NEA, NEH, UKRI, Arts Council England, and private foundations
+            Scanning funding sources from UKRI, Arts Council England, Wellcome Trust, Leverhulme Trust, as well as NSF, NIH, NEA, NEH, and private foundations
           </div>
         </div>
       </div>
