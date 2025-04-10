@@ -2,8 +2,9 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
-import { Menu, X, Search, BookOpen, Sparkles } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Logo from './Logo';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,10 +18,7 @@ const Navbar: React.FC = () => {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2">
           <Link to="/" className="flex items-center gap-2">
-            <Sparkles className="h-6 w-6 text-brand-purple" />
-            <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-brand-blue to-brand-purple">
-              VenThatGrant
-            </span>
+            <Logo variant="default" size="medium" withTagline={false} />
           </Link>
         </div>
         

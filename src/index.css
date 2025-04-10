@@ -43,6 +43,11 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* VenThatGrant brand colors */
+    --brand-blue: 210 100% 40%;      /* #0066CC */
+    --brand-dark-blue: 218 100% 15%; /* #002B59 */
+    --brand-gold: 41 72% 53%;        /* #D4AF37 */
   }
 
   .dark {
@@ -81,6 +86,11 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* VenThatGrant brand colors in dark mode */
+    --brand-blue: 210 100% 50%;      /* #0080FF */
+    --brand-dark-blue: 218 100% 80%; /* #B3D1FF */
+    --brand-gold: 41 80% 65%;        /* #E6C649 */
   }
 }
 
@@ -103,5 +113,29 @@
   .animated-gradient {
     background-size: 200% 200%;
     @apply bg-gradient-to-r from-brand-blue via-brand-purple to-brand-teal animate-gradient-shift;
+  }
+  
+  .text-brand-blue {
+    color: hsl(var(--brand-blue));
+  }
+  
+  .text-brand-dark-blue {
+    color: hsl(var(--brand-dark-blue));
+  }
+  
+  .text-brand-gold {
+    color: hsl(var(--brand-gold));
+  }
+  
+  .bg-brand-blue {
+    background-color: hsl(var(--brand-blue));
+  }
+  
+  .bg-brand-dark-blue {
+    background-color: hsl(var(--brand-dark-blue));
+  }
+  
+  .bg-brand-gold {
+    background-color: hsl(var(--brand-gold));
   }
 }

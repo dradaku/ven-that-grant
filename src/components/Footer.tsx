@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkles, Twitter, Facebook, Instagram, Github } from 'lucide-react';
+import { Twitter, Facebook, Instagram, Github } from 'lucide-react';
+import Logo from './Logo';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -11,12 +12,7 @@ const Footer: React.FC = () => {
       <div className="container py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-6 w-6 text-brand-purple" />
-              <span className="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-brand-blue to-brand-purple">
-                VenThatGrant
-              </span>
-            </div>
+            <Logo variant="default" size="medium" withTagline={true} />
             <p className="text-gray-600 text-sm">
               AI-powered grant discovery for researchers and creatives. Find the perfect funding opportunity for your next project.
             </p>
