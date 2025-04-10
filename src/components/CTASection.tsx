@@ -21,7 +21,7 @@ const CTASection: React.FC = () => {
                   Get Started for Free
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                <Button size="lg" variant="outline" className="border-white text-black hover:bg-white/10">
                   Schedule a Demo
                 </Button>
               </div>
