@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import CustomLayout from '@/components/CustomLayout';
 import { getProposals, optimizeProposal, Proposal, getSavedGrants } from '@/services/proposalService';
@@ -8,6 +9,20 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+
+// Helper function to generate status badges
+const getStatusBadge = (status: Proposal['status']) => {
+  switch (status) {
+    case 'draft':
+      return <Badge variant="outline">Draft</Badge>;
+    case 'optimized':
+      return <Badge className="bg-green-500">Optimized</Badge>;
+    case 'submitted':
+      return <Badge className="bg-blue-500">Submitted</Badge>;
+    default:
+      return null;
+  }
+};
 
 const ProposalsPage: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -54,19 +69,6 @@ const ProposalsPage: React.FC = () => {
   
   const handleViewReports = (proposalId: string) => {
     navigate(`/reports?proposalId=${proposalId}`);
-  };
-  
-  const getStatusBadge = (status: Proposal['status']) => {
-    switch (status) {
-      case 'draft':
-        return <Badge variant="outline">Draft</Badge>;
-      case 'optimized':
-        return <Badge className="bg-green-500">Optimized</Badge>;
-      case 'submitted':
-        return <Badge className="bg-blue-500">Submitted</Badge>;
-      default:
-        return null;
-    }
   };
 
   return (
