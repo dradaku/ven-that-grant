@@ -15,11 +15,11 @@ const steps = [
   {
     icon: <Zap className="h-10 w-10 text-brand-purple" />,
     title: "2. AI-Powered Discovery",
-    description: "The Venice AI engine scans thousands of funding sources, analyzing eligibility criteria, deadlines, and funding amounts to find relevant matches."
+    description: "The Venice AI engine scans thousands of funding sources, analysing eligibility criteria, deadlines, and funding amounts to find relevant matches."
   },
   {
     icon: <List className="h-10 w-10 text-brand-purple" />,
-    title: "3. Review Personalized Results",
+    title: "3. Review Personalised Results",
     description: "Get a curated list of grants ranked by relevance to your project, with detailed information and match scores."
   },
   {
@@ -63,7 +63,7 @@ const HowItWorks: React.FC = () => {
                 Powered by Venice AI Technology
               </h2>
               <p className="text-gray-600 mb-6">
-                Our platform leverages the powerful Venice AI API to scan and analyze thousands of grant opportunities from government agencies, private foundations, and international organizations.
+                Our platform leverages the powerful Venice AI API to scan and analyse thousands of grant opportunities from government agencies, private foundations, and international organisations.
               </p>
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start">
@@ -96,10 +96,10 @@ const HowItWorks: React.FC = () => {
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
                   </div>
-                  <span className="text-gray-700">Personalized match scoring based on your profile</span>
+                  <span className="text-gray-700">Personalised match scoring based on your profile</span>
                 </li>
               </ul>
-              <Button asChild className="bg-brand-purple hover:bg-brand-blue transition-colors">
+              <Button asChild className="bg-brand-purple hover:bg-brand-blue transition-colours">
                 <Link to="/explore">
                   Start Exploring Grants
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -132,8 +132,8 @@ const HowItWorks: React.FC = () => {
                     <BookOpen className="h-5 w-5 text-green-600" />
                   </div>
                   <div>
-                    <h4 className="font-medium">International Organizations</h4>
-                    <p className="text-sm text-gray-500">UNESCO, World Health Organization, and more</p>
+                    <h4 className="font-medium">International Organisations</h4>
+                    <p className="text-sm text-gray-500">UNESCO, World Health Organisation, and more</p>
                   </div>
                 </li>
                 <li className="flex items-center gap-3">

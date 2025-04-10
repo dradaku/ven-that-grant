@@ -16,12 +16,12 @@ const features = [
   {
     icon: <Clock className="h-10 w-10 text-brand-purple" />,
     title: "Deadline Alerts",
-    description: "Never miss an opportunity with personalized deadline reminders and application timelines."
+    description: "Never miss an opportunity with personalised deadline reminders and application timelines."
   },
   {
     icon: <Target className="h-10 w-10 text-brand-purple" />,
     title: "Relevance Matching",
-    description: "Our AI analyzes your research interests to find the most relevant funding opportunities."
+    description: "Our AI analyses your research interests to find the most relevant funding opportunities."
   },
   {
     icon: <BookOpen className="h-10 w-10 text-brand-purple" />,
@@ -31,7 +31,7 @@ const features = [
   {
     icon: <Database className="h-10 w-10 text-brand-purple" />,
     title: "Comprehensive Database",
-    description: "Access thousands of grants from government agencies, foundations, and private organizations."
+    description: "Access thousands of grants from government agencies, foundations, and private organisations."
   }
 ];
 
@@ -44,7 +44,7 @@ const FeaturesSection: React.FC = () => {
             Powered by Advanced AI
           </h2>
           <p className="text-xl text-gray-600">
-            Our Venice AI integration scans and analyzes thousands of funding sources to find opportunities that match your specific needs.
+            Our Venice AI integration scans and analyses thousands of funding sources to find opportunities that match your specific needs.
           </p>
         </div>
         
