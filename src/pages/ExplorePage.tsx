@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import Layout from '@/components/Layout';
+import CustomLayout from '@/components/CustomLayout';
 import GrantFinderForm from '@/components/GrantFinderForm';
 import GrantResultCard from '@/components/GrantResultCard';
 import { GrantResult } from '@/services/veniceService';
@@ -18,7 +17,7 @@ const ExplorePage: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <CustomLayout>
       <div className="container py-8">
         <h1 className="text-3xl font-bold mb-2">VenThatGrant™ — AI Grant Finder</h1>
         <p className="text-xl text-gray-600 mb-6">
@@ -70,7 +69,7 @@ const ExplorePage: React.FC = () => {
           </div>
         </div>
       </div>
-    </Layout>
+    </CustomLayout>
   );
 };
 

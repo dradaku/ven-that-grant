@@ -1,8 +1,8 @@
 
 import React, { useState } from 'react';
-import Layout from '@/components/Layout';
+import CustomLayout from '@/components/CustomLayout';
 import HeroSection from '@/components/HeroSection';
-import FeaturesSection from '@/components/FeaturesSection';
+import CustomFeaturesSection from '@/components/CustomFeaturesSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import CTASection from '@/components/CTASection';
 import GrantTweetingAgent from '@/components/GrantTweetingAgent';
@@ -42,9 +42,9 @@ const Index: React.FC = () => {
   };
 
   return (
-    <Layout>
+    <CustomLayout>
       <HeroSection />
-      <FeaturesSection />
+      <CustomFeaturesSection />
       
       {/* Twitter Agent Section */}
       <section className="py-16 bg-gray-50">
@@ -67,7 +67,7 @@ const Index: React.FC = () => {
       
       <TestimonialsSection />
       <CTASection />
-    </Layout>
+    </CustomLayout>
   );
 };
 

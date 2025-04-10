@@ -2,15 +2,25 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, BookmarkPlus, Check } from 'lucide-react';
 import { GrantResult } from '@/services/veniceService';
 import { Badge } from '@/components/ui/badge';
+import { saveGrant, getSavedGrants } from '@/services/proposalService';
+import { useToast } from '@/hooks/use-toast';
 
 interface GrantResultCardProps {
   grant: GrantResult;
 }
 
 const GrantResultCard: React.FC<GrantResultCardProps> = ({ grant }) => {
+  const { toast } = useToast();
+  const [isSaved, setIsSaved] = React.useState(() => {
+    // Check if this grant is already saved
+    return getSavedGrants().some(savedGrant => 
+      savedGrant.grant.id === grant.id
+    );
+  });
+  
   const formatMatchScore = (score: number) => {
     return `${score}%`;
   };
@@ -33,6 +43,18 @@ const GrantResultCard: React.FC<GrantResultCardProps> = ({ grant }) => {
       "Time to shine with this opportunity!"
     ];
     return encouragements[Math.floor(Math.random() * encouragements.length)];
+  };
+  
+  const handleSaveGrant = () => {
+    if (isSaved) return;
+    
+    saveGrant(grant);
+    setIsSaved(true);
+    
+    toast({
+      title: "Grant Saved",
+      description: "This grant has been saved to your collection",
+    });
   };
 
   return (
@@ -97,12 +119,32 @@ const GrantResultCard: React.FC<GrantResultCardProps> = ({ grant }) => {
                 <div className="text-sm font-medium text-brand-purple">
                   {randomEncouragement()}
                 </div>
-                <Button asChild variant="outline" size="sm">
-                  <a href={grant.url} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    View Grant
-                  </a>
-                </Button>
+                <div className="flex gap-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleSaveGrant}
+                    disabled={isSaved}
+                  >
+                    {isSaved ? (
+                      <>
+                        <Check className="h-4 w-4 mr-2" />
+                        Saved
+                      </>
+                    ) : (
+                      <>
+                        <BookmarkPlus className="h-4 w-4 mr-2" />
+                        Save Grant
+                      </>
+                    )}
+                  </Button>
+                  <Button asChild variant="outline" size="sm">
+                    <a href={grant.url} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      View Grant
+                    </a>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
