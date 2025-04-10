@@ -3,15 +3,13 @@ import Layout from '@/components/Layout';
 import GrantSearchForm from '@/components/GrantSearchForm';
 import GrantResultCard from '@/components/GrantResultCard';
 import { searchGrants, GrantResult } from '@/services/veniceService';
-import { hasValidApiKey } from '@/config/apiConfig';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
-import { RefreshCw, Filter, Info } from 'lucide-react';
+import { RefreshCw, Filter } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useSearchParams } from 'react-router-dom';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const ExplorePage: React.FC = () => {
   const [searchResults, setSearchResults] = useState<GrantResult[]>([]);
@@ -20,7 +18,6 @@ const ExplorePage: React.FC = () => {
   const [activeCountry, setActiveCountry] = useState('all');
   const [minMatchScore, setMinMatchScore] = useState(70);
   const [isLoading, setIsLoading] = useState(false);
-  const [usingSampleData, setUsingSampleData] = useState(false);
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
 
@@ -33,7 +30,6 @@ const ExplorePage: React.FC = () => {
 
   const performSearch = async (query: string) => {
     setIsLoading(true);
-    setUsingSampleData(false);
     
     try {
       const results = await searchGrants(query);
@@ -44,11 +40,6 @@ const ExplorePage: React.FC = () => {
         title: "Search Complete",
         description: `Found ${results.length} grants matching your criteria`,
       });
-      
-      const sampleIds = [1, 2, 3, 4, 5, 6, 7, 8];
-      const hasSampleId = results.some(grant => sampleIds.includes(grant.id));
-      setUsingSampleData(hasSampleId);
-      
     } catch (error) {
       toast({
         title: "Search Failed",
@@ -63,10 +54,6 @@ const ExplorePage: React.FC = () => {
   const handleSearch = async (results: GrantResult[]) => {
     setSearchResults(results);
     setFilteredResults(results);
-    
-    const sampleIds = [1, 2, 3, 4, 5, 6, 7, 8];
-    const hasSampleId = results.some(grant => sampleIds.includes(grant.id));
-    setUsingSampleData(hasSampleId);
   };
 
   const handleTabChange = (value: string) => {
@@ -113,15 +100,6 @@ const ExplorePage: React.FC = () => {
         <p className="text-xl text-gray-600 mb-6">
           Find the perfect funding opportunities for your research or creative project
         </p>
-        
-        {usingSampleData && (
-          <Alert className="mb-6 bg-blue-50 border-blue-200">
-            <Info className="h-4 w-4 text-blue-600" />
-            <AlertDescription className="text-blue-700">
-              Using sample grant data. The Venice AI API connection is unavailable. Results shown are for demonstration purposes.
-            </AlertDescription>
-          </Alert>
-        )}
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 space-y-6">
