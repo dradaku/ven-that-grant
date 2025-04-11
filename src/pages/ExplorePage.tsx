@@ -21,7 +21,7 @@ const ExplorePage: React.FC = () => {
       <div className="container py-8">
         <h1 className="text-3xl font-bold mb-2">VenThatGrant™ — AI Grant Finder</h1>
         <p className="text-xl text-gray-600 mb-6">
-          Built by Dr. Adaku Jennifer Agwunobi to match your unique profile with the perfect funding opportunities
+          Built by researchers from Oxford University and Imperial College to match your unique profile with the perfect funding opportunities
         </p>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
