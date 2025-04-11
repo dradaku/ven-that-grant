@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import CustomLayout from '@/components/CustomLayout';
 import GrantFinderForm from '@/components/GrantFinderForm';
@@ -13,7 +14,13 @@ const ExplorePage: React.FC = () => {
   const [searchParams] = useSearchParams();
 
   const handleSearch = async (results: GrantResult[]) => {
+    setIsLoading(false);
     setSearchResults(results);
+  };
+
+  const handleSearchStart = () => {
+    setIsLoading(true);
+    setSearchResults([]);
   };
 
   return (
@@ -26,7 +33,7 @@ const ExplorePage: React.FC = () => {
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 space-y-6">
-            <GrantFinderForm onSearch={handleSearch} />
+            <GrantFinderForm onSearch={handleSearch} onSearchStart={handleSearchStart} />
           </div>
           
           <div className="lg:col-span-2">

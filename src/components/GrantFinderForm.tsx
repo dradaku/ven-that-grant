@@ -13,6 +13,7 @@ import { searchGrants, GrantResult, UserProfile } from '@/services/veniceService
 
 interface GrantFinderFormProps {
   onSearch: (results: GrantResult[]) => void;
+  onSearchStart?: () => void;
 }
 
 type FormValues = {
@@ -58,7 +59,7 @@ const grantSizeOptions = [
   { value: '50k', label: '£50k+' },
 ];
 
-const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch }) => {
+const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch, onSearchStart }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const form = useForm<FormValues>({
@@ -84,6 +85,9 @@ const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch }) => {
     }
     
     setIsLoading(true);
+    if (onSearchStart) {
+      onSearchStart();
+    }
     
     const userProfile: UserProfile = {
       role: values.role,
