@@ -26,7 +26,7 @@ const CTASection: React.FC = () => {
                 </Button>
               </div>
               <p className="text-sm opacity-80 pt-4">
-                No credit card required. Dr. Adaku's AI will match you with up to 5 grants per request.
+                No credit card required. VenThatGrant will match you with up to 5 grants per request.
               </p>
             </div>
           </div>
