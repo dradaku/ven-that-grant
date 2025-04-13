@@ -18,6 +18,7 @@ interface GrantFinderFormProps {
 
 type FormValues = {
   role: string;
+  otherRole: string;
   fundingTypes: string[];
   region: string;
   minGrantSize: string;
@@ -32,6 +33,7 @@ const roleOptions = [
   { value: 'creative', label: 'Creative Artist' },
   { value: 'web3', label: 'Web3 Founder' },
   { value: 'health', label: 'Health Innovator' },
+  { value: 'other', label: 'Other' },
 ];
 
 const fundingOptions = [
@@ -65,6 +67,7 @@ const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch, onSearchSta
   const form = useForm<FormValues>({
     defaultValues: {
       role: '',
+      otherRole: '',
       fundingTypes: [],
       region: '',
       minGrantSize: 'none',
@@ -73,6 +76,8 @@ const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch, onSearchSta
       description: '',
     },
   });
+
+  const watchRole = form.watch("role");
 
   const onSubmit = async (values: FormValues) => {
     if (!values.query) {
@@ -89,8 +94,10 @@ const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch, onSearchSta
       onSearchStart();
     }
     
+    const effectiveRole = values.role === 'other' ? values.otherRole : values.role;
+    
     const userProfile: UserProfile = {
-      role: values.role,
+      role: effectiveRole,
       fundingTypes: values.fundingTypes,
       region: values.region,
       minGrantSize: values.minGrantSize,
@@ -120,7 +127,7 @@ const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch, onSearchSta
         variant: "destructive",
       });
       
-      const mockResults = getMockFinderResults(values.query, values.role);
+      const mockResults = getMockFinderResults(values.query, effectiveRole);
       onSearch(mockResults);
     } finally {
       setIsLoading(false);
@@ -163,6 +170,24 @@ const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch, onSearchSta
                 </FormItem>
               )}
             />
+
+            {watchRole === 'other' && (
+              <FormField
+                control={form.control}
+                name="otherRole"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Please specify:</FormLabel>
+                    <FormControl>
+                      <Input 
+                        placeholder="Please describe your role" 
+                        {...field} 
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            )}
 
             <FormField
               control={form.control}
