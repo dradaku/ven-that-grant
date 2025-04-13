@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
@@ -139,7 +140,7 @@ const GrantFinderForm: React.FC<GrantFinderFormProps> = ({ onSearch, onSearchSta
       <CardHeader>
         <CardTitle>VenThatGrant™ AI Grant Finder</CardTitle>
         <CardDescription>
-          Built by Dr. Adaku Jennifer Agwunobi to match you with the perfect grants
+          Built by VenThatGrant to match you with the perfect grants
         </CardDescription>
       </CardHeader>
       <CardContent>
