@@ -42,7 +42,7 @@ const HeroSection: React.FC = () => {
           </h1>
           
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            AI-powered grant discovery that connects researchers and creatives with funding opportunities tailored to their unique projects.
+            End-to-End AI-powered grant engine. From discovery, critiquing and reporting- freeing innovators, researchers and creatives to create impact.
           </p>
           
           <form onSubmit={handleSearch} className="flex w-full max-w-md mx-auto">
